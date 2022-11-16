@@ -1,0 +1,41 @@
+
+.Paginator{
+    margin-top: 30px;
+    overflow: hidden;
+    float: right;
+    display: flex;
+    
+}
+
+.PaginatorNum{
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.PaginatorRows{
+    width: 30px;
+    height: 30px;
+    background-color: #0183ff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    margin: 0px 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PageActive{
+    border-radius: 50%;
+    background-color: #0183ff;
+    color: white;
+}
+
+.disableRow{
+    background-color: gray;
+}

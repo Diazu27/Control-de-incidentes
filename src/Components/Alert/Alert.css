@@ -1,0 +1,58 @@
+.AlertCont{
+    position: absolute;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.80);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.AlertCard{
+
+    width: 600px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.AlertCard h3{
+    margin: 20px;
+}
+
+.AlertCard img {
+    width: 300px;
+}
+
+.cardButton{
+    color: white;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #0183ff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.DeleteBTN{
+    background-color: #ff3001;
+}
+
+.CancelBTN{
+    background-color: #eaeaea;
+    color: rgb(34, 34, 34);
+}
+
+.btnBox{
+    display: flex;
+}

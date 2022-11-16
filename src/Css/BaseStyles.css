@@ -1,0 +1,140 @@
+/*Page*/
+.mainBox{
+    flex: 1;
+    padding: 80px 80px 0px 80px;
+    margin-left: 260px;
+}
+
+.NavView{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Btn-Nuevo{
+    color: white;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #0183ff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.icon{
+    margin-right: 10px;
+}
+
+.title{
+    display: flex;
+    align-items: center;
+}
+
+.ChartBox{
+    background-color: rgb(220, 220, 220);
+    margin-top: 40px;
+    height: 120px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+
+/*Tabla*/
+
+.Table{
+    display: table;
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.TableHead{
+    background-color: #0183ff;
+    height: 40px;
+}
+
+.IDColumn{width: 40px;}
+
+
+td{
+   padding: 10px;
+   text-align: center;
+}
+tr:nth-child(even) {background-color: #e2e2e2;}
+
+
+
+.BtnBox{
+    display: flex;
+    justify-content: center;
+}
+
+.BtnEditar{
+    padding:10px;
+    border-radius: 5px;
+    background-color: #0183ff;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.BtnEliminar{
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    background-color: #ff3001;
+    margin: 0px 10px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+/*Forms*/
+
+.form{
+    width: 100%;
+    margin-top: 50px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.form-box{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 10px;
+}
+
+.form-box label{
+    margin-bottom: 5px;
+}
+
+.form-row{
+    display: flex;
+
+}
+
+.form-input{
+    padding: 10px;
+    border-radius:5px;
+    border: 1px solid #b5b5b5;
+}
+
+.FormAlert{
+    background-color: #fe542e;
+    margin: 20px 10px;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+}
