@@ -1,0 +1,143 @@
+.incidenteBox{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(450px, 1fr));
+}
+
+
+.bar{
+    height: 10px;
+    margin-bottom: 10px;
+}
+
+.CardIncidente{
+    background-color: white;
+    margin: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+
+.fechaIncidente{
+    margin-right: 20px;
+}
+
+.cardCont{
+    margin: 20px 0px 20px 20px;
+}
+
+.RowIncidente{
+    display: flex;
+    justify-content: space-between;
+}
+
+.DataIncidente{
+    margin-top: 20px;
+}
+
+.IncidentePrioridad{
+    display: flex;
+    align-items: flex-end;
+}
+
+.Prioridad{
+    padding: 10px;
+    border-radius: 10px 0px 0px 10px;
+    color: white;
+    font-weight: 700;
+    width: 150px;
+}
+
+
+.ColorUrgente{
+    background-color: red;
+}
+
+.ColorModerado{
+    background-color: rgb(255, 146, 14);
+
+}
+
+.ColorNormal{
+    background-color: rgb(125, 125, 125);
+
+}
+
+.IncidenteDetail{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.DetailBox{
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    display: flex;
+    padding: 20px;
+    flex: 1;
+    margin: 5px;
+    flex-direction: column;
+}
+
+.problemBox{
+    margin-top: 50px;
+    text-align: justify;
+}
+
+.ProblemTitle{
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.text{
+    width: 100%;
+    height: 200px;
+    margin-bottom: 30px;
+}
+
+.MsgBox{
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
+
+.Btn-Incidente{
+    width: 200px;
+    justify-content: center;
+    float: right;
+    
+}
+
+.DetailBody{
+    display: flex;
+}
+
+.DataRow{
+    display: flex;
+    margin: 0px 10px;
+    flex-direction: column;
+}
+
+.Data{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.PrioridadLabel{
+    padding: 10px 20px;
+    color: white;
+    border-radius: 10px;
+    font-weight: 700;
+    margin-right: 10px;
+
+}
+
+.mt{
+    margin-top: 50px;
+}
+
+.BtnBoxIncident{
+    display: flex;
+}

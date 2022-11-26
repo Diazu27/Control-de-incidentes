@@ -1,0 +1,30 @@
+.MainLogin{
+    display: flex;
+}
+
+.LoginBox{
+    width: 500px;
+    padding: 30px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+.Loginform{
+    width: 100%;
+    margin-top: 30px;
+}
+
+.loginBtn{
+    margin-top: 40px;
+    float: right;
+}
+
+.LoginImg{
+    background-color: red;
+    flex: 1;
+    height: 100vh;
+}

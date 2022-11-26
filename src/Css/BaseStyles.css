@@ -97,6 +97,11 @@ tr:nth-child(even) {background-color: #e2e2e2;}
     cursor: pointer;
 }
 
+.subTitle{
+    display: flex;
+    align-items: center;
+}
+
 
 /*Forms*/
 
@@ -137,4 +142,8 @@ tr:nth-child(even) {background-color: #e2e2e2;}
     padding: 15px;
     border-radius: 10px;
     color: white;
+}
+
+.mb-2{
+    margin-bottom: 100px;
 }

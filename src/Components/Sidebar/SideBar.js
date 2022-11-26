@@ -1,4 +1,3 @@
-import React from 'react'
 import {HiOutlineDesktopComputer, HiOutlineUser, } from 'react-icons/hi'
 import {FiAlertTriangle} from 'react-icons/fi'
 

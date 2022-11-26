@@ -105,3 +105,88 @@ export const getRol = async()=>{
   return data
 }
 
+
+
+export const getIncidentes = async()=>{
+  let { data } = await supabase.from('Incidente').select(`
+  ID,
+  Created_at,
+  Usuario(*,
+    Departamento(Nombre)),
+  Prioridad(ID,Nombre)
+  `)
+  return data;
+}
+
+
+export const SendMsg = async(msg,ID)=>{
+  const { data } = await supabase
+  .from('Incidente')
+  .update(msg)
+  .match({ID: ID})
+  .select();
+  return data;
+}
+
+
+export const getIncidenteByID = async(ID)=>{
+  let { data } = await supabase.from('Incidente').select(`
+  ID,
+  Comentario,
+  Respuesta,
+  Created_at,
+  Equipo (*), 
+  Usuario(*,
+    Departamento(Nombre)),
+  Status(Nombre),
+  Prioridad(ID,Nombre)
+  `).eq('ID',ID);
+
+
+  return data
+}
+
+export const LoginUser = async(Email,Password)=>{
+  let { data } = await supabase.from('Usuario').select().match({Correo:Email, Password:Password})
+  return data
+}
+
+export const getIncidentsByUser = async(UserID)=>{
+  let { data } = await supabase.from('Incidente').select(`
+   *,
+   Prioridad(ID,Nombre),
+   Usuario(Nombre,Apellido,
+    Departamento(Nombre))
+   `).match({ID_User:UserID})
+   .filter('Status','not.eq','2')
+  return data
+}
+
+
+export const getEquiposByUser = async(UserID)=>{
+  let { data } = await supabase.from('Equipo').select().match({Usuario:UserID})
+  return data
+}
+
+export const CreateIncident = async(Incident)=>{
+  const {data} = await supabase
+    .from('Incidente')
+    .insert([Incident])
+    .select();
+    
+  return data
+}
+
+
+export const CloseIncident = async(IncidentID)=>{
+  const {data} = await supabase
+    .from('Incidente')
+    .update({
+      Prioridad:3,
+      Status:2
+    })
+    .match({ID:IncidentID})
+    .select();
+    
+  return data
+}
