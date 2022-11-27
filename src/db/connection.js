@@ -66,7 +66,7 @@ return data
 }
 
 export const getUsuarioByRange= async(from=0, to=0)=>{
-let {data, count } = await supabase.from('Usuario').select('*', { count: 'exact' }).range(from,to)
+let {data, count } = await supabase.from('Usuario').select('*,Departamento(Nombre)', { count: 'exact' }).range(from,to)
 return {data, count}
 }
 
@@ -114,7 +114,7 @@ export const getIncidentes = async()=>{
   Usuario(*,
     Departamento(Nombre)),
   Prioridad(ID,Nombre)
-  `)
+  `).filter('Status','not.eq','2')
   return data;
 }
 
@@ -168,6 +168,11 @@ export const getEquiposByUser = async(UserID)=>{
   return data
 }
 
+export const getEquiposFree = async()=>{
+  let  data  = await supabase.from('Equipo').select().match({Usuario:"0"})
+  return data
+}
+
 export const CreateIncident = async(Incident)=>{
   const {data} = await supabase
     .from('Incidente')
@@ -176,7 +181,6 @@ export const CreateIncident = async(Incident)=>{
     
   return data
 }
-
 
 export const CloseIncident = async(IncidentID)=>{
   const {data} = await supabase

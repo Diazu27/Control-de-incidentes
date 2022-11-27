@@ -3,30 +3,41 @@ import '../../Css/BaseStyles.css';
 import {HiOutlineDesktopComputer,HiPlus,HiPencilAlt} from 'react-icons/hi'
 import {MdDeleteForever} from 'react-icons/md'
 import { Link } from 'react-router-dom';
-import { deleteEquipos, getEquiposByRange } from '../../db/connection';
+import { deleteEquipos, getEquiposByRange, getEquiposFree } from '../../db/connection';
 import { Confirm } from '../../Components/Alert/Confirm';
 import { AlertReload } from '../../Components/Alert/AlertReload';
 import { Paginator } from '../../Components/Paginator/Paginator';
 
 
 
-export const Equipos = () => {
+export const AsignarEquipo = () => {
 
   const [dataEquipos, setDataEquipos] = useState([])
   const [Pages, setPages] = useState(0)
   const [Count, setCount] = useState(0);
   const [Limit, setLimit] = useState(4);
+  const [UserSelected, setUserSelected] = useState({})
+  const [EquiposFree, setEquiposFree] = useState([])
   
   const [Deleted, setDeleted] = useState({isDeleted: false, id:0, Confirm: false})
  
   useEffect(()=>{
     const getData = async()=>{
       let {data,count} = await getEquiposByRange(Pages, Pages+Limit);
+      
       setCount(count)
       setDataEquipos(data)
     }
     getData()
-  },[Pages,Deleted.isDeleted])
+  },[])
+
+  useEffect(()=>{
+    const getData = async()=>{
+        let {data} = await getEquiposFree();
+        setEquiposFree(data)
+    }
+    getData()
+  },[])
 
   const handleDelete = (id) =>{
     setDeleted({
@@ -45,12 +56,28 @@ export const Equipos = () => {
       {Deleted.isDeleted? <AlertReload msg='Equipo Eliminado Correctamente' handleState={setDeleted} /> : '' } 
 
       <div className='NavView'>
-        <h1 className='title'><HiOutlineDesktopComputer className='icon'></HiOutlineDesktopComputer> Equipos</h1>
-        <Link to="new" className='Btn-Nuevo'> <HiPlus className='icon'/> Nuevo Equipo </Link>
+        <h1 className='title'><HiOutlineDesktopComputer className='icon'></HiOutlineDesktopComputer> Asignar equipos</h1>
+        <Link to="new" className='Btn-Nuevo'> <HiPlus className='icon'/> Guardar</Link>
       </div>
 
-      <div className='ChartBox'>
-        
+      <div className='ChartBox'> 
+        <div className='form-row'>
+              <div className='form-box'>
+                  <label>ID de Usuario</label>
+                  <input type='text' className='form-input' placeholder='Nombre' name='Nombre' value={1} onChange={1}/>
+              </div>
+              <div className='form-box'>
+                  <label>Equipo</label>
+                  <select className='form-input' name='ID_Equipo' value={0} onChange={0}>
+                  <option value="">SELECCIONE...</option>
+                  {
+                    EquiposFree.map((Data)=>{
+                    return <option key={Data.ID} value={parseInt(Data.ID)}>{Data.Tipo+" - "+Data.Marca + " " +Data.Modelo}</option>
+                    })
+                  } 
+                </select>
+              </div>
+          </div>
       </div>
 
       <table className='Table'>

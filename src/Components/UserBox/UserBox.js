@@ -15,7 +15,7 @@ export const UserBox = () => {
   
   const handleLogOut = ()=>{
     LogoutUserAuth();
-    navigate("login")
+    navigate("/login")
   }
 
 

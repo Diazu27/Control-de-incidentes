@@ -111,7 +111,7 @@ export const EditarUsuario = () => {
     <div className='mainBox'>
 
       {
-        IsComplete ? <Alert msg='Usuario editado correctamente' path='/usuarios' /> : ""
+        IsComplete ? <Alert msg='Usuario editado correctamente' path='/admin/usuarios' /> : ""
       }
      
       <div className='NavView'>

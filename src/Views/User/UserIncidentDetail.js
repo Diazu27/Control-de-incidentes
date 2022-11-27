@@ -79,7 +79,7 @@ export const UserIncidentDetail = () => {
 
         <div className='BtnBoxIncident'>
          <label className={`PrioridadLabel ${setColor(Incidente.Prioridad.ID)}`}>{Incidente.Prioridad.Nombre}</label>
-         <button className='Btn-Nuevo' > <HiPlus className='icon' onClick={HandleCloseIncident}/> Cerrar incidente</button>
+         <button className='Btn-Nuevo' onClick={HandleCloseIncident}> <HiPlus className='icon'/> Cerrar incidente</button>
         </div>
       </div>
 

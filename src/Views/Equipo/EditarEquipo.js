@@ -99,7 +99,7 @@ export const EditarEquipo = () => {
     <div className='mainBox'>
 
       {
-        IsComplete ? <Alert msg='Equipo editado correctamente' path='/equipos' /> : ""
+        IsComplete ? <Alert msg='Equipo editado correctamente' path='/admin/equipos' /> : ""
       }
      
       <div className='NavView'>

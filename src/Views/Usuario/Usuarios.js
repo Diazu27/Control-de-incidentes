@@ -77,7 +77,7 @@ export const Usuarios = () => {
               <td>{Usuario.Nombre}</td>
               <td>{Usuario.Apellido}</td>
               <td>{Usuario.Correo}</td>
-              <td>{Usuario.Departamento}</td>
+              <td>{Usuario.Departamento.Nombre}</td>
               <td>{Usuario.Telefono}</td>
               <td className='BtnBox'>
                 <Link className='BtnEditar' to={`edit/${Usuario.ID}`}><HiPencilAlt/></Link>

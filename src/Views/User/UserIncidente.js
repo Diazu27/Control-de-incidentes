@@ -36,7 +36,7 @@ export const UserIncidente = () => {
     <div className='mainBox'>
 
     <div className='NavView'>
-        <h1 className='title'><FiAlertTriangle className='icon'/>Mis Incidente</h1>
+        <h1 className='title'><FiAlertTriangle className='icon'/>Mis Incidentes</h1>
         <Link to="new" className='Btn-Nuevo'> <HiPlus className='icon'/> Nuevo Incidente </Link>
     </div>
 

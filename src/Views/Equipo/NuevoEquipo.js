@@ -51,7 +51,7 @@ export const NuevoEquipo = () => {
     <div className='mainBox'>
 
       {
-        IsComplete ? <Alert msg='Equipo creado correctamente' path='/equipos'/> : ""
+        IsComplete ? <Alert msg='Equipo creado correctamente' path='/admin/equipos'/> : ""
       }
      
       <div className='NavView'>

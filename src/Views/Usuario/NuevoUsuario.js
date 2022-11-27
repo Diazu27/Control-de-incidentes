@@ -66,7 +66,7 @@ export const NuevoUsuario = () => {
     <div className='mainBox'>
 
       {
-        IsComplete ? <Alert msg='Usuario creado correctamente' path='/Usuarios'/> : ""
+        IsComplete ? <Alert msg='Usuario creado correctamente' path='/admin/Usuarios'/> : ""
       }
      
       <div className='NavView'>
