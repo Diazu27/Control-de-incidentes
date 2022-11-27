@@ -57,7 +57,7 @@ export const UserNewIncident = () => {
     <div className='mainBox'>
 
     {
-      IsComplete ? <Alert msg='Incidente creado correctamente' path='/incidentes'/> : ""
+      IsComplete ? <Alert msg='Incidente creado correctamente' path='/client/incidentes'/> : ""
     }
    
     <div className='NavView'>

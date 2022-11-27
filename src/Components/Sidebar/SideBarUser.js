@@ -14,10 +14,10 @@ export const SideBarUser = () => {
     </div>
 
     <div className='SidebarCont'>
-        <NavLink className={({isActive})=> isActive? 'SidebarBTN BtnActive':'SidebarBTN'} to='equipos'>
+        <NavLink className={({isActive})=> isActive? 'SidebarBTN BtnActive':'SidebarBTN'} to='/client/equipos'>
           <HiOutlineDesktopComputer className='SideIcon'/>Mis equipos
         </NavLink>
-        <NavLink className={({isActive})=> isActive? 'SidebarBTN BtnActive':'SidebarBTN'} to='incidentes'>
+        <NavLink className={({isActive})=> isActive? 'SidebarBTN BtnActive':'SidebarBTN'} to='/client/incidentes'>
           <FiAlertTriangle className='SideIcon'/>Mis incidentes
         </NavLink>
     </div>

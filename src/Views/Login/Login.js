@@ -28,7 +28,7 @@ export const Login = ({setUser}) => {
             }
             
             if(AuthUser.Role === RolesList.User){
-                navigate("/")
+                navigate("/client")
             }
 
         }else{
