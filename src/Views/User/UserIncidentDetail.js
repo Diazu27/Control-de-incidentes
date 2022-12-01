@@ -72,7 +72,7 @@ export const UserIncidentDetail = () => {
     <div className='mainBox'>
 
       {
-        IsComplete ? <Alert msg='¡Gracias! Incidente cerrado' path='/incidentes'/> : ""
+        IsComplete ? <Alert msg='¡Gracias! Incidente cerrado' path='/client/incidentes'/> : ""
       }
       <div className='NavView'>
         <h1 className='title'><FiAlertTriangle className='icon'/> Información de incidente</h1>

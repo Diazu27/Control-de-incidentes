@@ -15,7 +15,7 @@ function App() {
     <div>
       <Routes>
       <Route path="admin//*" element={<AdminView />} />
-      <Route path="/*" element={<Login/>} />
+      <Route path="/" element={<Login/>} />
       <Route path="client//*" element={<UserView/>} />
     </Routes>
     </div>

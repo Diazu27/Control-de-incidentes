@@ -85,7 +85,7 @@ export const IncidenteDetail = () => {
 
 
       {
-        IsComplete ? <Alert msg='Mensaje enviado' path='/incidentes'/> : ""
+        IsComplete ? <Alert msg='Mensaje enviado' path='/admin/incidentes'/> : ""
       }
       <div className='NavView'>
         <h1 className='title'><FiAlertTriangle className='icon'/> Información de incidente</h1>
