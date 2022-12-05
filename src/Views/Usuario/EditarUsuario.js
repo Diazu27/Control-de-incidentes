@@ -1,8 +1,8 @@
 import {HiOutlineDesktopComputer,HiPlus} from 'react-icons/hi'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { getDepartamentos, getRol, getUsuarioByID, UpdateUsuario } from '../../db/connection';
 import { Alert } from '../../Components/Alert/Alert';
+import { getDepartments, getUserByID, getUserRol, updateUser } from '../../db/connection';
 
 
 
@@ -14,8 +14,8 @@ export const EditarUsuario = () => {
 
   useEffect(() => {
     const getData = async()=>{
-      let data = await getDepartamentos()
-      let RolData = await getRol();
+      let data = await getDepartments()
+      let RolData = await getUserRol();
       setRol(RolData);
       setDepartamentos(data);
     }
@@ -41,7 +41,7 @@ export const EditarUsuario = () => {
   
   useEffect(() => {
     const getData = async()=>{
-      let user = await getUsuarioByID(params.id)
+      let user = await getUserByID(params.id)
 
       setData({
         Nombre: user[0].Nombre,
@@ -91,7 +91,7 @@ export const EditarUsuario = () => {
         IsError : IsError,
         msg: msg
       })
-      const data = await UpdateUsuario(Data,params.id);
+      const data = await updateUser(Data,params.id);
 
       if(data){
         setIsComplete(true)

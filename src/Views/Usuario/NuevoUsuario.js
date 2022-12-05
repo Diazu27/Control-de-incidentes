@@ -5,7 +5,7 @@ import {AiOutlineUserAdd} from 'react-icons/ai'
 import { useForm } from '../../Hooks/useForm'
 import { useEffect, useState } from 'react'
 import { Alert } from '../../Components/Alert/Alert'
-import { getDepartamentos, getRol, insertUsuarios } from '../../db/connection'
+import { addUser, getDepartments, getUserRol } from '../../db/connection'
 
 
 export const NuevoUsuario = () => {
@@ -16,8 +16,8 @@ export const NuevoUsuario = () => {
 
   useEffect(() => {
     const getData = async()=>{
-      let data = await getDepartamentos()
-      let RolData = await getRol();
+      let data = await getDepartments()
+      let RolData = await getUserRol();
       setRol(RolData);
       setDepartamentos(data);
     }
@@ -52,7 +52,7 @@ export const NuevoUsuario = () => {
       setError({IsError,msg})
     }else{
       setError({IsError})
-      const data = await insertUsuarios(formValues);
+      const data = await addUser(formValues);
 
       if(data){
         setIsComplete(true)

@@ -1,26 +1,28 @@
 import React from 'react'
+import { Routes, Route} from "react-router-dom"
 
-import { Routes, Route, Navigate } from "react-router-dom"
+
 import { SideBar } from './../Components/Sidebar/SideBar';
-import { EditarEquipo } from "./../Views/Equipo/EditarEquipo";
-import { Equipos } from './../Views/Equipo/Equipos';
-import { NuevoEquipo } from "./../Views/Equipo/NuevoEquipo";
+
+
 import { IncidenteDetail } from "./../Views/Incidentes/IncidenteDetail";
 import { Incidentes } from "./../Views/Incidentes/Incidentes";
 import { EditarUsuario } from "./../Views/Usuario/EditarUsuario";
 import { NuevoUsuario } from "./../Views/Usuario/NuevoUsuario";
 import { Usuarios } from "./../Views/Usuario/Usuarios";
-import { AsignarEquipo } from './Equipo/AsignarEquipo';
-import { Login } from './Login/Login';
+
+import { Equipments } from './EquipmentViews/Equipments';
+import { NewEquipment } from './EquipmentViews/NewEquipment';
+import { EditEquipment } from './EquipmentViews/EditEquipment';
 
 export const AdminView = () => {
   return (
     <div className="App">
       <SideBar/>
       <Routes>
-        <Route path="equipos" element={ <Equipos/> } />
-        <Route path="equipos/new" element={ <NuevoEquipo/> } />
-        <Route path="equipos/edit/:id" element={ <EditarEquipo/> } />
+        <Route path="equipos" element={ <Equipments/> } />
+        <Route path="equipos/new" element={ <NewEquipment/> } />
+        <Route path="equipos/edit/:id" element={ <EditEquipment/> } />
 
 
         <Route path="usuarios" element={<Usuarios/>}/>
@@ -29,7 +31,6 @@ export const AdminView = () => {
 
 
         <Route path="incidentes" element={<Incidentes/>}/>
-        <Route path="asignar" element={<AsignarEquipo/>}/>
 
         <Route path="incidentes/:id" element={ <IncidenteDetail/> } />
 

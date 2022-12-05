@@ -1,24 +1,21 @@
 import {HiOutlineDesktopComputer,HiPlus} from 'react-icons/hi'
 
 
-import { tiposEquipo } from '../../Models/TiposEquipo'
 import { useForm } from '../../Hooks/useForm'
-import {SistemasOperativos}  from '../../Models/SistemasOperativos.js'
 import { useState } from 'react'
-import { insertEquipos } from '../../db/connection'
 import { Alert } from '../../Components/Alert/Alert'
+import { addEquipment } from '../../db/connection'
+
+import { EquipmentsTypes } from '../../Models/EquipmentsTypes'
+import { OperativeSystemsList } from '../../Models/OperativeSystemsList'
 
 
-export const NuevoEquipo = () => {
+export const NewEquipment = () => {
 
-  const [Error, setError] = useState({
-    IsError: false,
-    msg: ""
-  });
+  const [ErrorMessage, setErrorMessage] = useState({IsError:false,msg: ""});
+  const [IsProcessComplete, setIsProcessComplete] = useState(false)
 
-  const [IsComplete, setIsComplete] = useState(false)
-
-  const InitialData = {
+  const EquipmentDataTemplate = {
     Marca: '',
     Tipo:'',
     Modelo:'',
@@ -28,41 +25,27 @@ export const NuevoEquipo = () => {
     SO:'',
   }
 
-  const  [formValues, handleInputChange,validateForm ] = useForm(InitialData)
-  const {Marca, Tipo, Modelo, Serial, MAC, IP, SO} = formValues;
-
+  const  [EquipmentData,handleInputChange,validateForm] = useForm(EquipmentDataTemplate)
+  const {Marca, Tipo, Modelo, Serial, MAC, IP, SO} = EquipmentData;
+  
   const handleSubmit = async()=>{
-    const {IsError, msg} = validateForm()
-    
-    if(IsError){
-      setError({IsError,msg})
-    }else{
-      setError({IsError})
-      const data = await insertEquipos(formValues);
-
-      if(data){
-        setIsComplete(true)
-      }
+    const {IsError, msg} = validateForm();
+    setErrorMessage({IsError : IsError,msg: msg})
+    if(!IsError){
+      const isEquipmentUpdated = await addEquipment(EquipmentData);
+      if(isEquipmentUpdated) setIsProcessComplete(true);
     }
   }
-
-
   return (
     <div className='mainBox'>
-
-      {
-        IsComplete ? <Alert msg='Equipo creado correctamente' path='/admin/equipos'/> : ""
-      }
-     
+      {IsProcessComplete ? <Alert msg='Equipo creado correctamente' path='/admin/equipos'/> : ""}
       <div className='NavView'>
         <h1 className='title'><HiOutlineDesktopComputer className='icon'></HiOutlineDesktopComputer> Nuevo equipo</h1>
         <button className='Btn-Nuevo' onClick={handleSubmit}> <HiPlus className='icon'/> Guardar</button>
       </div>
 
       <form className='form'>
-        {
-          Error.IsError ? <div className='FormAlert'>{Error.msg}</div> : ""
-        }
+        {ErrorMessage.IsError ? <div className='FormAlert'>{ErrorMessage.msg}</div> : ""}
 
         <div className='form-row'>
             <div className='form-box'>
@@ -73,11 +56,7 @@ export const NuevoEquipo = () => {
                 <label>Tipo</label>
                 <select className='form-input' name='Tipo' value={Tipo} onChange={handleInputChange}>
                   <option value="">SELECCIONE...</option>
-                  {
-                    tiposEquipo.map((equipo,i)=>{
-                      return <option key={i} value={equipo}>{equipo}</option>                      
-                    })
-                  } 
+                  {EquipmentsTypes.map((equipo,i)=>{return <option key={i} value={equipo}>{equipo}</option>})} 
                 </select>
             </div>        
         </div>
@@ -108,11 +87,7 @@ export const NuevoEquipo = () => {
                 <label>SO</label>
                 <select className='form-input' name='SO' value={SO} onChange={handleInputChange}>
                   <option value="">SELECCIONE...</option>
-                  {
-                    SistemasOperativos.map((so,i)=>{
-                      return <option key={i} value={so}>{so}</option>                      
-                    })
-                  } 
+                  {OperativeSystemsList.map((so,i)=>{return <option key={i} value={so}>{so}</option>})} 
                 </select>
             </div> 
         </div>

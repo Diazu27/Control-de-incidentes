@@ -3,7 +3,7 @@ import '../../Css/Login.css'
 import { AiFillLock } from 'react-icons/ai'
 import LoginImg from '../../Img/LoginMenu.jpg'
 import { useForm } from '../../Hooks/useForm'
-import { LoginUser } from '../../db/connection'
+import { LoginWithEmailAndPassword } from '../../db/connection'
 import { useNavigate } from 'react-router-dom'
 import { RolesList } from '../../Models/Roles'
 
@@ -16,7 +16,7 @@ export const Login = ({setUser}) => {
 
     const handleLogin = async(e)=>{
         e.preventDefault();
-        const data = await LoginUser(Email, Password)
+        const data = await LoginWithEmailAndPassword(Email, Password)
         
         if(data.length > 0){
             let AuthUser = data[0];

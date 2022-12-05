@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { Confirm } from '../../Components/Alert/Confirm';
 import { AlertReload } from '../../Components/Alert/AlertReload';
 import { Paginator } from '../../Components/Paginator/Paginator';
-import { deleteUsuario, getUsuarioByRange } from '../../db/connection';
+import { deleteUser, getUserByRange } from '../../db/connection';
 
 
 
@@ -22,7 +22,7 @@ export const Usuarios = () => {
  
   useEffect(()=>{
     const getData = async()=>{
-      let {data,count} = await getUsuarioByRange(Pages, Pages+Limit);
+      let {data,count} = await getUserByRange(Pages, Pages+Limit);
       setCount(count)
       setDataUsuarios(data)
     }
@@ -42,7 +42,7 @@ export const Usuarios = () => {
     <div className='mainBox'>
 
 
-      {Deleted.Confirm? <Confirm msg='¿Seguro que quiere eliminar el Usuario?' ID={Deleted.id} Confirm={setDeleted} handleDelete={deleteUsuario}/>: ''}  
+      {Deleted.Confirm? <Confirm msg='¿Seguro que quiere eliminar el Usuario?' ID={Deleted.id} Confirm={setDeleted} handleDelete={deleteUser}/>: ''}  
       {Deleted.isDeleted? <AlertReload msg='Usuario Eliminado Correctamente' handleState={setDeleted} /> : '' } 
 
       <div className='NavView'>

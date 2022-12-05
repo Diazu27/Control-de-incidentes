@@ -9,8 +9,6 @@ import { Login } from './Views/Login/Login';
 //import './Css/bootstrap.min.css'
 
 function App() {
-
-  
   return (
     <div>
       <Routes>

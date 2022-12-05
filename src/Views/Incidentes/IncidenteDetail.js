@@ -4,10 +4,10 @@ import {FiAlertTriangle} from 'react-icons/fi'
 import {FaLaptop} from 'react-icons/fa'
 import {HiSortDescending} from 'react-icons/hi'
 import {BiMessageCheck} from 'react-icons/bi'
-import {getIncidenteByID, SendMsg } from '../../db/connection'
 import { useParams } from 'react-router-dom'
 import { useForm } from '../../Hooks/useForm'
 import { Alert } from '../../Components/Alert/Alert'
+import { getIncidentByID, SendIncidentMessage } from '../../db/connection'
 
 
 export const IncidenteDetail = () => {
@@ -47,7 +47,7 @@ export const IncidenteDetail = () => {
       setError({IsError,msg})
     }else{
       setError({IsError})
-      const data = await SendMsg(formValues, params.id);
+      const data = await SendIncidentMessage(formValues, params.id);
       if(data){
         setIsComplete(true)
       }
@@ -71,7 +71,7 @@ export const IncidenteDetail = () => {
 
   useEffect(() => {
     const getData = async()=>{
-      const data = await getIncidenteByID(params.id);
+      const data = await getIncidentByID(params.id);
       setIncidente(data[0])
     }
     getData();

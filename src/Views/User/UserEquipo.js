@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { HiOutlineDesktopComputer } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
-import { getEquiposByUser } from '../../db/connection'
+import { getEquipmetByUser } from '../../db/connection'
 import { getUserAuth } from '../../db/localStorage'
 
 export const UserEquipo = () => {
@@ -9,7 +9,7 @@ export const UserEquipo = () => {
     useEffect(() => {
       const getData =async()=>{
         let UserAuth = getUserAuth()
-        const Data = await getEquiposByUser(UserAuth.ID)
+        const Data = await getEquipmetByUser(UserAuth.ID)
         setUserEquipment(Data)
     }
     getData();

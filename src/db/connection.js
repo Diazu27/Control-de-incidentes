@@ -1,113 +1,111 @@
-
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://koqbspboipfrrkvaoxhn.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvcWJzcGJvaXBmcnJrdmFveGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njc1MjM0OTMsImV4cCI6MTk4MzA5OTQ5M30.sn4D3oS8ROY9mF1Quji7_yhf5RoGswAj8a-dNbpeNJ4'
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 
-export const getEquipos = async()=>{
+export const getEquipments = async()=>{
     let { data } = await supabase.from('Equipo').select('*');
     return data
 }
-
-export const insertEquipos = async(Equipo)=>{
+export const addEquipment = async(Equipment)=>{
     const {data} = await supabase
     .from('Equipo')
-    .insert([Equipo])
+    .insert([Equipment])
     .select();
     
   return data
 }
-
-export const getEquiposByRange= async(from=0, to=0)=>{
+export const getEquipmentsByRange= async(from=0, to=0)=>{
   let {data, count } = await supabase.from('Equipo').select('*', { count: 'exact' }).range(from,to)
   return {data, count}
 }
-
-export const getEquiposByID = async(ID)=>{
-  let { data } = await supabase.from('Equipo').select('*').eq('ID',ID);
+export const getEquipmentByID = async(EquipmentID)=>{
+  let { data } = await supabase.from('Equipo').select('*').eq('ID',EquipmentID);
   return data
 }
-
-
-export const UpdateEquipos =async(Equipo,ID)=>{
+export const updateEquipment =async(Equipment,EquipmentID)=>{
   const { data } = await supabase
   .from('Equipo')
-  .update(Equipo)
-  .match({ ID: ID})
+  .update(Equipment)
+  .match({ ID: EquipmentID})
   .select();
   return data;
 }
-
-export const deleteEquipos = async(ID)=>{
+export const deleteEquipment = async(EquipmentID)=>{
   const { data } = await supabase
   .from('Equipo')
   .delete()
-  .eq('ID', ID)
+  .eq('ID', EquipmentID)
   .select()
 
   return data
 }
-
-
-export const getUsuarios = async()=>{
-  let { data } = await supabase.from('Usuario').select('*');
+export const getEquipmetByUser = async(UserID)=>{
+  let { data } = await supabase.from('Equipo').select().match({Usuario:UserID})
+  return data
+}
+export const getAvailableEquipments = async()=>{
+  let  data  = await supabase.from('Equipo').select().match({Usuario:"0"})
   return data
 }
 
-export const insertUsuarios = async(Usuario)=>{
+
+
+export const getUsers = async()=>{
+  let { data } = await supabase.from('Usuario').select('*');
+  return data
+}
+export const addUser = async(User)=>{
   const {data} = await supabase
   .from('Usuario')
-  .insert([Usuario])
+  .insert([User])
   .select();
   
 return data
 }
-
-export const getUsuarioByRange= async(from=0, to=0)=>{
+export const getUserByRange= async(from=0, to=0)=>{
 let {data, count } = await supabase.from('Usuario').select('*,Departamento(Nombre)', { count: 'exact' }).range(from,to)
 return {data, count}
 }
-
-export const getUsuarioByID = async(ID)=>{
-let { data } = await supabase.from('Usuario').select('*').eq('ID',ID);
+export const getUserByID = async(UserID)=>{
+let { data } = await supabase.from('Usuario').select('*').eq('ID',UserID);
 return data
 }
-
-
-export const UpdateUsuario =async(Usuario,ID)=>{
+export const updateUser =async(User,UserID)=>{
 const { data } = await supabase
 .from('Usuario')
-.update(Usuario)
-.match({ ID: ID})
+.update(User)
+.match({ ID: UserID})
 .select();
 return data;
 }
-
-export const deleteUsuario = async(ID)=>{
+export const deleteUser = async(UserID)=>{
 const { data } = await supabase
 .from('Usuario')
 .delete()
-.eq('ID', ID)
+.eq('ID', UserID)
 .select()
 return data
 }
+export const getUserRol = async()=>{
+  let { data } = await supabase.from('Rol').select('*');
+  return data
+}
+export const LoginWithEmailAndPassword = async(Email,Password)=>{
+  let { data } = await supabase.from('Usuario').select().match({Correo:Email, Password:Password})
+  return data
+}
 
-export const getDepartamentos = async()=>{
+
+export const getDepartments = async()=>{
   let { data } = await supabase.from('Departamento').select('*');
   return data
 }
 
 
-export const getRol = async()=>{
-  let { data } = await supabase.from('Rol').select('*');
-  return data
-}
-
-
-
-export const getIncidentes = async()=>{
+export const getIncidents = async()=>{
   let { data } = await supabase.from('Incidente').select(`
   ID,
   Created_at,
@@ -117,19 +115,7 @@ export const getIncidentes = async()=>{
   `).filter('Status','not.eq','2')
   return data;
 }
-
-
-export const SendMsg = async(msg,ID)=>{
-  const { data } = await supabase
-  .from('Incidente')
-  .update(msg)
-  .match({ID: ID})
-  .select();
-  return data;
-}
-
-
-export const getIncidenteByID = async(ID)=>{
+export const getIncidentByID = async(IncidentID)=>{
   let { data } = await supabase.from('Incidente').select(`
   ID,
   Comentario,
@@ -140,17 +126,17 @@ export const getIncidenteByID = async(ID)=>{
     Departamento(Nombre)),
   Status(Nombre),
   Prioridad(ID,Nombre)
-  `).eq('ID',ID);
-
-
+  `).eq('ID',IncidentID);
   return data
 }
-
-export const LoginUser = async(Email,Password)=>{
-  let { data } = await supabase.from('Usuario').select().match({Correo:Email, Password:Password})
-  return data
+export const SendIncidentMessage = async(IncidentMessage,IncidentID)=>{
+  const { data } = await supabase
+  .from('Incidente')
+  .update(IncidentMessage)
+  .match({ID: IncidentID})
+  .select();
+  return data;
 }
-
 export const getIncidentsByUser = async(UserID)=>{
   let { data } = await supabase.from('Incidente').select(`
    *,
@@ -161,18 +147,6 @@ export const getIncidentsByUser = async(UserID)=>{
    .filter('Status','not.eq','2')
   return data
 }
-
-
-export const getEquiposByUser = async(UserID)=>{
-  let { data } = await supabase.from('Equipo').select().match({Usuario:UserID})
-  return data
-}
-
-export const getEquiposFree = async()=>{
-  let  data  = await supabase.from('Equipo').select().match({Usuario:"0"})
-  return data
-}
-
 export const CreateIncident = async(Incident)=>{
   const {data} = await supabase
     .from('Incidente')
@@ -181,7 +155,6 @@ export const CreateIncident = async(Incident)=>{
     
   return data
 }
-
 export const CloseIncident = async(IncidentID)=>{
   const {data} = await supabase
     .from('Incidente')
@@ -194,3 +167,9 @@ export const CloseIncident = async(IncidentID)=>{
     
   return data
 }
+
+
+
+
+
+

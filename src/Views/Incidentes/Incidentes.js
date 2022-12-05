@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import '../../Css/Incidentes.css'
-import { getIncidentes, getIncidentsByUser } from '../../db/connection'
+import { getIncidents, getIncidentsByUser } from '../../db/connection'
 
 export const Incidentes = () => {
 
@@ -22,7 +22,7 @@ export const Incidentes = () => {
 
     useEffect(() => {
         const getData = async()=>{
-          const data = await getIncidentes();
+          const data = await getIncidents();
           setIncidentes(data)
         }
         getData();
@@ -38,7 +38,7 @@ export const Incidentes = () => {
     const LoadUserData = async()=>{
 
         if(UserID.length <=0){
-            let data = await getIncidentes()
+            let data = await getIncidents()
             setIncidentes(data)
         }else{
             let data = await getIncidentsByUser(UserID);

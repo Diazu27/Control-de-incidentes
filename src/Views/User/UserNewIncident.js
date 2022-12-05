@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { HiOutlineDesktopComputer, HiPlus } from 'react-icons/hi';
 import { Alert } from '../../Components/Alert/Alert';
-import { CreateIncident, getEquiposByUser } from '../../db/connection';
+import { CreateIncident, getEquipmetByUser } from '../../db/connection';
 import { getUserAuth } from '../../db/localStorage';
 import { useForm } from '../../Hooks/useForm';
 import { PrioridadList } from '../../Models/PrioridadList';
@@ -19,7 +19,7 @@ export const UserNewIncident = () => {
     useEffect(() => {
       const getData =async()=>{
         let UserAuth = getUserAuth()
-        const Data = await getEquiposByUser(UserAuth.ID)
+        const Data = await getEquipmetByUser(UserAuth.ID)
         InitialData.ID_User = UserAuth.ID;
         setUserEquipment(Data)
     }

@@ -1,4 +1,4 @@
-export const tiposEquipo = [
+export const EquipmentsTypes = [
     'LAPTOP',
     'PC',
     'SMARTPHONE',

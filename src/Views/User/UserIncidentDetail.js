@@ -4,7 +4,7 @@ import {FiAlertTriangle} from 'react-icons/fi'
 import {FaLaptop} from 'react-icons/fa'
 import {HiPlus, HiSortDescending} from 'react-icons/hi'
 import {BiMessageCheck} from 'react-icons/bi'
-import {CloseIncident, getIncidenteByID} from '../../db/connection'
+import {CloseIncident, getIncidentByID} from '../../db/connection'
 import { useParams } from 'react-router-dom'
 import { Alert } from '../../Components/Alert/Alert'
 
@@ -51,7 +51,7 @@ export const UserIncidentDetail = () => {
 
   useEffect(() => {
     const getData = async()=>{
-      const data = await getIncidenteByID(params.id);
+      const data = await getIncidentByID(params.id);
       setIncidente(data[0])
     }
     getData();
