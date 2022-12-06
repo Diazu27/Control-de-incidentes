@@ -65,7 +65,7 @@ export const EditEquipment = () => {
     <div className='mainBox'>
       {IsUpdatedComplete ? <Alert msg='Equipo editado correctamente' path='/admin/equipos' /> : ""}
      
-      <div className='NavView'>
+      <div className='NavView' role='NavView'>
         <h1 className='title'><HiOutlineDesktopComputer className='icon'></HiOutlineDesktopComputer> Editar equipo</h1>
         <button className='Btn-Nuevo' onClick={handleSubmit}> <HiPlus className='icon'/> Guardar</button>
       </div>
