@@ -11,13 +11,14 @@ import { Alert } from '../../Components/Alert/Alert'
 
 export const UserIncidentDetail = () => {
 
-  const [IsComplete, setIsComplete] = useState(false)
+  const [IsProcessComplete, setIsProcessComplete] = useState(false)
 
-  const [Incidente, setIncidente] = useState(
+  const URLparams = useParams()
+  const IncidentID = URLparams.id;
+
+  const [IncidentData, setIncidentData] = useState(
     {
-      ID:0,
       Comentario:'',
-      Respuesta:'',
       Usuario: {Nombre:'',Departamento:{Nombre:''}},
       Prioridad: {Nombre:''},
       Status: {Nombre:''},
@@ -32,38 +33,31 @@ export const UserIncidentDetail = () => {
       }
     }
   )
-  
-  
-
-  const Colors ={
-    ColorUrgente:"ColorUrgente",
-    ColorModerado:"ColorModerado",
-    ColorNormal:"ColorNormal"
-  }
-
-  const setColor=(color)=>{
-    if(color === 1) return Colors.ColorUrgente
-    if(color === 2) return Colors.ColorModerado
-    if(color === 3) return Colors.ColorNormal 
-  }
-
-  const params = useParams()
 
   useEffect(() => {
-    const getData = async()=>{
-      const data = await getIncidentByID(params.id);
-      setIncidente(data[0])
+    const getApiData = async()=>{
+      const IncidentData = await getIncidentByID(IncidentID);
+      setIncidentData(IncidentData[0])
     }
-    getData();
-  }, [params])
+    getApiData();
+  }, [IncidentID])
   
+  
+  const Colors ={
+    UrgentColor:"ColorUrgente",
+    ModerateColor:"ColorModerado",
+    NormalColor:"ColorNormal"
+  }
+  
+  const setColor=(color)=>{
+      if(color === 1) return Colors.UrgentColor
+      if(color === 2) return Colors.ModerateColor
+      if(color === 3) return Colors.NormalColor 
+  }
 
   const HandleCloseIncident = ()=>{
-    const data = CloseIncident(params.id)
-    if(data){
-      setIsComplete(true)
-    }
-
+    const isIncidentClosed = CloseIncident(IncidentID)
+    if(isIncidentClosed)setIsProcessComplete(true)
   }
 
 
@@ -72,13 +66,13 @@ export const UserIncidentDetail = () => {
     <div className='mainBox'>
 
       {
-        IsComplete ? <Alert msg='¡Gracias! Incidente cerrado' path='/client/incidentes'/> : ""
+        IsProcessComplete ? <Alert msg='¡Gracias! Incidente cerrado' path='/client/incidentes'/> : ""
       }
       <div className='NavView'>
         <h1 className='title'><FiAlertTriangle className='icon'/> Información de incidente</h1>
 
         <div className='BtnBoxIncident'>
-         <label className={`PrioridadLabel ${setColor(Incidente.Prioridad.ID)}`}>{Incidente.Prioridad.Nombre}</label>
+         <label className={`PrioridadLabel ${setColor(IncidentData.Prioridad.ID)}`}>{IncidentData.Prioridad.Nombre}</label>
          <button className='Btn-Nuevo' onClick={HandleCloseIncident}> <HiPlus className='icon'/> Cerrar incidente</button>
         </div>
       </div>
@@ -92,26 +86,26 @@ export const UserIncidentDetail = () => {
           <div className='DetailBody'>
           <div className='DataRow'>
             <p className='Data'>
-              <strong>Nombre: </strong> {Incidente.Usuario.Nombre+" "+Incidente.Usuario.Apellido}
+              <strong>Nombre: </strong> {IncidentData.Usuario.Nombre+" "+IncidentData.Usuario.Apellido}
             </p>
             <p className='Data'>
-              <strong>Correo: </strong> {Incidente.Usuario.Correo}
+              <strong>Correo: </strong> {IncidentData.Usuario.Correo}
             </p>
             <p className='Data'>
-              <strong>Departamento: </strong> {Incidente.Usuario.Departamento.Nombre}
+              <strong>Departamento: </strong> {IncidentData.Usuario.Departamento.Nombre}
             </p>
             <p className='Data'>
-              <strong>Telefono:</strong> {Incidente.Usuario.Telefono}
+              <strong>Telefono:</strong> {IncidentData.Usuario.Telefono}
             </p>
 
           </div>
 
           <div className='DataRow'>
             <p className='Data'>
-              <strong>Fecha de creación: </strong> {Incidente.Created_at}
+              <strong>Fecha de creación: </strong> {IncidentData.Created_at}
             </p>
             <p className='Data'>
-              <strong>Status</strong> {Incidente.Status.Nombre}
+              <strong>Status</strong> {IncidentData.Status.Nombre}
             </p>
           </div>
           </div>
@@ -124,29 +118,29 @@ export const UserIncidentDetail = () => {
           <div className='DetailBody'>
           <div className='DataRow'>
             <p className='Data'>
-              <strong>Marca: </strong> {Incidente.Equipo.Marca}
+              <strong>Marca: </strong> {IncidentData.Equipo.Marca}
             </p>
             <p className='Data'>
-              <strong>Modelo: </strong> {Incidente.Equipo.Modelo}
+              <strong>Modelo: </strong> {IncidentData.Equipo.Modelo}
             </p>
             <p className='Data'>
-              <strong>Tipo: </strong> {Incidente.Equipo.Tipo}
+              <strong>Tipo: </strong> {IncidentData.Equipo.Tipo}
             </p>
             <p className='Data'>
-              <strong>Serie: </strong> {Incidente.Equipo.Serial}
+              <strong>Serie: </strong> {IncidentData.Equipo.Serial}
             </p>
 
           </div>
 
           <div className='DataRow'>
             <p className='Data'>
-              <strong>IP: </strong> {Incidente.Equipo.IP}
+              <strong>IP: </strong> {IncidentData.Equipo.IP}
             </p>
             <p className='Data'>
-              <strong>Mac: </strong> {Incidente.Equipo.MAC}
+              <strong>Mac: </strong> {IncidentData.Equipo.MAC}
             </p>
             <p className='Data'>
-              <strong>Sistema Operativo: </strong> {Incidente.Equipo.SO}
+              <strong>Sistema Operativo: </strong> {IncidentData.Equipo.SO}
             </p>
           </div>
           </div>
@@ -157,16 +151,16 @@ export const UserIncidentDetail = () => {
         <div className='ProblemTitle'>          
           <h2 className='subTitle'><HiSortDescending className='icon'/>Descripción</h2>
         </div>
-        <p>{Incidente.Comentario}</p>
+        <p>{IncidentData.Comentario}</p>
       </div> 
 
       {
-        Incidente.Respuesta !== null ? 
+        IncidentData.Respuesta !== null ? 
         <div className='problemBox mb-2'>
         <div className='ProblemTitle'>          
           <h2 className='subTitle'><HiSortDescending className='icon'/>Respuesta</h2>
         </div>
-        <p>{Incidente.Respuesta}</p>
+        <p>{IncidentData.Respuesta}</p>
       </div> 
       :""
       }

@@ -5,20 +5,20 @@ import {FaLaptop} from 'react-icons/fa'
 import {HiSortDescending} from 'react-icons/hi'
 import {BiMessageCheck} from 'react-icons/bi'
 import { useParams } from 'react-router-dom'
+
 import { useForm } from '../../Hooks/useForm'
 import { Alert } from '../../Components/Alert/Alert'
 import { getIncidentByID, SendIncidentMessage } from '../../db/connection'
 
+export const IncidentDetail = () => {
 
-export const IncidenteDetail = () => {
+  const [ErrorMessage, setErrorMessage] = useState({IsError:false,msg: ""});
+  const [IsProcessComplete, setIsProcessComplete] = useState(false)
 
-  const [Error, setError] = useState({
-    IsError: false,
-    msg: ""
-  });
-  const [IsComplete, setIsComplete] = useState(false)
+  const URLparams = useParams()
+  const IncidentID = URLparams.id;
 
-  const [Incidente, setIncidente] = useState(
+  const [IncidentData, setIncidentData] = useState(
     {
       Comentario:'',
       Usuario: {Nombre:'',Departamento:{Nombre:''}},
@@ -35,61 +35,50 @@ export const IncidenteDetail = () => {
       }
     }
   )
-  
-  const [formValues, handleInputChange, validateForm] = useForm({Respuesta:""})
+  const [AnswerInputValue, handleInputChange, validateForm] = useForm({Answer:""})
+  const {Answer} = AnswerInputValue;
 
-  const {Respuesta} = formValues;
-
-  const handleSubmit = async()=>{
-    const {IsError, msg} = validateForm()
-    
-    if(IsError){
-      setError({IsError,msg})
-    }else{
-      setError({IsError})
-      const data = await SendIncidentMessage(formValues, params.id);
-      if(data){
-        setIsComplete(true)
-      }
-    }
-  }
-  
-
-  const Colors ={
-    ColorUrgente:"ColorUrgente",
-    ColorModerado:"ColorModerado",
-    ColorNormal:"ColorNormal"
-  }
-
-  const setColor=(color)=>{
-    if(color === 1) return Colors.ColorUrgente
-    if(color === 2) return Colors.ColorModerado
-    if(color === 3) return Colors.ColorNormal 
-  }
-
-  const params = useParams()
 
   useEffect(() => {
     const getData = async()=>{
-      const data = await getIncidentByID(params.id);
-      setIncidente(data[0])
+      const data = await getIncidentByID(IncidentID);
+      setIncidentData(data[0])
     }
     getData();
-  }, [params])
+  }, [IncidentID])
+
+
+  const handleSubmit = async()=>{
+    const {IsError, msg} = validateForm();
+    setErrorMessage({IsError : IsError,msg: msg})
+    if(!IsError){
+      const isEquipmentUpdated = await SendIncidentMessage(Answer,IncidentID);
+      if(isEquipmentUpdated) setIsProcessComplete(true);
+    }    
+  }
   
+const Colors ={
+  UrgentColor:"ColorUrgente",
+  ModerateColor:"ColorModerado",
+  NormalColor:"ColorNormal"
+}
 
-
-
-  return (
+const setColor=(color)=>{
+    if(color === 1) return Colors.UrgentColor
+    if(color === 2) return Colors.ModerateColor
+    if(color === 3) return Colors.NormalColor 
+}
+  
+return (
     <div className='mainBox'>
 
 
       {
-        IsComplete ? <Alert msg='Mensaje enviado' path='/admin/incidentes'/> : ""
+        IsProcessComplete ? <Alert msg='Mensaje enviado' path='/admin/incidentes'/> : ""
       }
       <div className='NavView'>
         <h1 className='title'><FiAlertTriangle className='icon'/> Información de incidente</h1>
-        <label className={`PrioridadLabel ${setColor(Incidente.Prioridad.ID)}`}>{Incidente.Prioridad.Nombre}</label>
+        <label className={`PrioridadLabel ${setColor(IncidentData.Prioridad.ID)}`}>{IncidentData.Prioridad.Nombre}</label>
            
       </div>
 
@@ -102,26 +91,26 @@ export const IncidenteDetail = () => {
           <div className='DetailBody'>
           <div className='DataRow'>
             <p className='Data'>
-              <strong>Nombre: </strong> {Incidente.Usuario.Nombre+" "+Incidente.Usuario.Apellido}
+              <strong>Nombre: </strong> {IncidentData.Usuario.Nombre+" "+IncidentData.Usuario.Apellido}
             </p>
             <p className='Data'>
-              <strong>Correo: </strong> {Incidente.Usuario.Correo}
+              <strong>Correo: </strong> {IncidentData.Usuario.Correo}
             </p>
             <p className='Data'>
-              <strong>Departamento: </strong> {Incidente.Usuario.Departamento.Nombre}
+              <strong>Departamento: </strong> {IncidentData.Usuario.Departamento.Nombre}
             </p>
             <p className='Data'>
-              <strong>Telefono:</strong> {Incidente.Usuario.Telefono}
+              <strong>Telefono:</strong> {IncidentData.Usuario.Telefono}
             </p>
 
           </div>
 
           <div className='DataRow'>
             <p className='Data'>
-              <strong>Fecha de creación: </strong> {Incidente.Created_at}
+              <strong>Fecha de creación: </strong> {IncidentData.Created_at}
             </p>
             <p className='Data'>
-              <strong>Status</strong> {Incidente.Status.Nombre}
+              <strong>Status</strong> {IncidentData.Status.Nombre}
             </p>
           </div>
           </div>
@@ -134,29 +123,29 @@ export const IncidenteDetail = () => {
           <div className='DetailBody'>
           <div className='DataRow'>
             <p className='Data'>
-              <strong>Marca: </strong> {Incidente.Equipo.Marca}
+              <strong>Marca: </strong> {IncidentData.Equipo.Marca}
             </p>
             <p className='Data'>
-              <strong>Modelo: </strong> {Incidente.Equipo.Modelo}
+              <strong>Modelo: </strong> {IncidentData.Equipo.Modelo}
             </p>
             <p className='Data'>
-              <strong>Tipo: </strong> {Incidente.Equipo.Tipo}
+              <strong>Tipo: </strong> {IncidentData.Equipo.Tipo}
             </p>
             <p className='Data'>
-              <strong>Serie: </strong> {Incidente.Equipo.Serial}
+              <strong>Serie: </strong> {IncidentData.Equipo.Serial}
             </p>
 
           </div>
 
           <div className='DataRow'>
             <p className='Data'>
-              <strong>IP: </strong> {Incidente.Equipo.IP}
+              <strong>IP: </strong> {IncidentData.Equipo.IP}
             </p>
             <p className='Data'>
-              <strong>Mac: </strong> {Incidente.Equipo.MAC}
+              <strong>Mac: </strong> {IncidentData.Equipo.MAC}
             </p>
             <p className='Data'>
-              <strong>Sistema Operativo: </strong> {Incidente.Equipo.SO}
+              <strong>Sistema Operativo: </strong> {IncidentData.Equipo.SO}
             </p>
           </div>
           </div>
@@ -167,7 +156,7 @@ export const IncidenteDetail = () => {
         <div className='ProblemTitle'>          
           <h2 className='subTitle'><HiSortDescending className='icon'/>Descripción</h2>
         </div>
-        <p>{Incidente.Comentario}</p>
+        <p>{IncidentData.Comentario}</p>
       </div> 
 
 
@@ -178,10 +167,10 @@ export const IncidenteDetail = () => {
         </div>
 
         {
-          Error.IsError ? <div className='FormAlert'>{Error.msg}</div> : ""
+          ErrorMessage.IsError ? <div className='FormAlert'>{ErrorMessage.msg}</div> : ""
         }
 
-        <textarea className='form-input text' name='Respuesta' value={Respuesta} onChange={handleInputChange}></textarea>
+        <textarea className='form-input text' name='Respuesta' value={Answer} onChange={handleInputChange}></textarea>
         <button className='Btn-Nuevo Btn-Incidente' onClick={handleSubmit}>Enviar</button>
       </div>
 

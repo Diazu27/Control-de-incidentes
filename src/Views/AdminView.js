@@ -4,16 +4,14 @@ import { Routes, Route} from "react-router-dom"
 
 import { SideBar } from './../Components/Sidebar/SideBar';
 
-
-import { IncidenteDetail } from "./../Views/Incidentes/IncidenteDetail";
-import { Incidentes } from "./../Views/Incidentes/Incidentes";
-import { EditarUsuario } from "./../Views/Usuario/EditarUsuario";
-import { NuevoUsuario } from "./../Views/Usuario/NuevoUsuario";
-import { Usuarios } from "./../Views/Usuario/Usuarios";
-
 import { Equipments } from './EquipmentViews/Equipments';
 import { NewEquipment } from './EquipmentViews/NewEquipment';
 import { EditEquipment } from './EquipmentViews/EditEquipment';
+import { Incidents } from './Incidents/Incidents';
+import { IncidentDetail } from './Incidents/IncidentDetail';
+import { Collaborators } from './Collaborator/Collaborators';
+import { NewCollaborator } from './Collaborator/NewCollaborator';
+import { EditCollaborator } from './Collaborator/EditCollaborator';
 
 export const AdminView = () => {
   return (
@@ -24,17 +22,12 @@ export const AdminView = () => {
         <Route path="equipos/new" element={ <NewEquipment/> } />
         <Route path="equipos/edit/:id" element={ <EditEquipment/> } />
 
+        <Route path="usuarios" element={<Collaborators/>}/>
+        <Route path="usuarios/new" element={ <NewCollaborator/> } />
+        <Route path="usuarios/edit/:id" element={ <EditCollaborator/> } />
 
-        <Route path="usuarios" element={<Usuarios/>}/>
-        <Route path="usuarios/new" element={ <NuevoUsuario/> } />
-        <Route path="usuarios/edit/:id" element={ <EditarUsuario/> } />
-
-
-        <Route path="incidentes" element={<Incidentes/>}/>
-
-        <Route path="incidentes/:id" element={ <IncidenteDetail/> } />
-
-
+        <Route path="incidentes" element={<Incidents/>}/>
+        <Route path="incidentes/:id" element={ <IncidentDetail/> } />
 
       </Routes>
     </div>

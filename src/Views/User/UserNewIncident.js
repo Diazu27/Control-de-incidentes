@@ -8,57 +8,42 @@ import { PrioridadList } from '../../Models/PrioridadList';
 
 export const UserNewIncident = () => {
 
-  const InitialData = {
-    ID_Equipo: '',
-    ID_User:0,
-    Comentario:'',
-    Prioridad:0,
-  }
-
-    const [UserEquipment, setUserEquipment] = useState([])
-    useEffect(() => {
-      const getData =async()=>{
-        let UserAuth = getUserAuth()
-        const Data = await getEquipmetByUser(UserAuth.ID)
-        InitialData.ID_User = UserAuth.ID;
-        setUserEquipment(Data)
+  const incidentTemplate={
+      ID_Equipo: '',
+      ID_User:0,
+      Comentario:'',
+      Prioridad:0,
     }
-    getData();
-      
-    }, [])
+
+  const UserAuth = getUserAuth()
+  const [UserEquipment, setUserEquipment] = useState([])
+  useEffect(() => {
+    const getApiData =async()=>{
+      const UserEquipments = await getEquipmetByUser(UserAuth.ID)
+      setUserEquipment(UserEquipments);
+    }
+  getApiData();
+    
+  }, [UserAuth])
+     
+  const [ErrorMessage, setErrorMessage] = useState({IsError:false,msg: ""});
+  const [IsProcessComplete, setIsProcessComplete] = useState(false)    
+  const  [EquipmentformValues, handleInputChange,validateForm ] = useForm(incidentTemplate)
+  const {ID_Equipo,Prioridad,Comentario} = EquipmentformValues;
     
 
-    const [Error, setError] = useState({
-        IsError: false,
-        msg: ""
-      });
-    
-      const [IsComplete, setIsComplete] = useState(false)
-    
-      const  [formValues, handleInputChange,validateForm ] = useForm(InitialData)
-      const {ID_Equipo,Prioridad,Comentario} = formValues;
-    
-      const handleSubmit = async()=>{
-        const {IsError, msg} = validateForm()
-        
-        if(IsError){
-          setError({IsError,msg})
-        }else{
-          setError({IsError})
-          const data = CreateIncident(formValues)
-    
-          if(data){
-            setIsComplete(true)
-          }
-        }
-      }
-    
+  const handleSubmit = async()=>{
+    const {IsError, msg} = validateForm();
+    setErrorMessage({IsError : IsError,msg: msg})
+    if(!IsError){
+      const isEquipmentUpdated = await CreateIncident({...EquipmentformValues,ID_User:UserAuth.ID});
+      if(isEquipmentUpdated) setIsProcessComplete(true);
+    }    
+  }
+   
   return (
     <div className='mainBox'>
-
-    {
-      IsComplete ? <Alert msg='Incidente creado correctamente' path='/client/incidentes'/> : ""
-    }
+    {IsProcessComplete ? <Alert msg='Incidente creado correctamente' path='/client/incidentes'/> : ""}
    
     <div className='NavView'>
       <h1 className='title'><HiOutlineDesktopComputer className='icon'></HiOutlineDesktopComputer> Nuevo incidente</h1>
@@ -66,35 +51,24 @@ export const UserNewIncident = () => {
     </div>
 
     <form className='form'>
-      {
-        Error.IsError ? <div className='FormAlert'>{Error.msg}</div> : ""
-      }
+      { ErrorMessage.IsError ? <div className='FormAlert'>{ErrorMessage.msg}</div> : ""}
 
       <div className='form-row'>
           <div className='form-box'>
               <label>Equipo</label>
               <select className='form-input' name='ID_Equipo' value={ID_Equipo} onChange={handleInputChange}>
                 <option value="">SELECCIONE...</option>
-                {
-                  UserEquipment.map((Data)=>{
-                  return <option key={Data.ID} value={parseInt(Data.ID)}>{Data.Tipo+" - "+Data.Marca + " " +Data.Modelo}</option>
-                  })
-                } 
+                {UserEquipment.map((Data)=>{return <option key={Data.ID} value={parseInt(Data.ID)}>{Data.Tipo+" - "+Data.Marca + " " +Data.Modelo}</option>})} 
               </select>
           </div>   
           <div className='form-box'>
               <label>Prioridad</label>
               <select className='form-input' name='Prioridad' value={Prioridad} onChange={handleInputChange}>
                 <option value="">SELECCIONE...</option>
-                {
-                 PrioridadList.map((Data)=>{
-                  return <option key={Data.ID} value={Data.ID}>{Data.Nombre}</option>
-                 })
-                } 
+                {PrioridadList.map((Data)=>{return <option key={Data.ID} value={Data.ID}>{Data.Nombre}</option>}) } 
               </select>
           </div>       
       </div>
-  
       <div className='form-row'>
           <div className='form-box'>
               <label>Descripción</label>

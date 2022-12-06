@@ -1,39 +1,29 @@
 import React from 'react'
-import '../../Css/Login.css'
 import { AiFillLock } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
+
+import { RolesList } from '../../Models/Roles'
+import '../../Css/Login.css'
+import { LoginWithEmailAndPassword } from '../../db/connection'
 import LoginImg from '../../Img/LoginMenu.jpg'
 import { useForm } from '../../Hooks/useForm'
-import { LoginWithEmailAndPassword } from '../../db/connection'
-import { useNavigate } from 'react-router-dom'
-import { RolesList } from '../../Models/Roles'
 
-export const Login = ({setUser}) => {
+export const Login = () => {
 
     const navigate = useNavigate()
 
-    const  [formValues, handleInputChange] = useForm({Email:"",Password:""})
-    const {Email, Password} = formValues;
+    const  [LoginformValues, handleInputChange] = useForm({Email:"",Password:""})
+    const {Email, Password} = LoginformValues;
 
     const handleLogin = async(e)=>{
         e.preventDefault();
-        const data = await LoginWithEmailAndPassword(Email, Password)
-        
-        if(data.length > 0){
-            let AuthUser = data[0];
-
-           localStorage.setItem('User',JSON.stringify(data[0]))
-
-            if(AuthUser.Role === RolesList.Admin){
-                navigate("/admin")
-            }
+        const AuthUser = await LoginWithEmailAndPassword(Email, Password)     
+        if(AuthUser.length > 0){
+           localStorage.setItem('User',JSON.stringify(AuthUser[0]))
+            if(AuthUser[0].Role === RolesList.Admin)navigate("/admin")
+            if(AuthUser[0].Role === RolesList.User) navigate("/client")
             
-            if(AuthUser.Role === RolesList.User){
-                navigate("/client")
-            }
-
-        }else{
-            alert("Error")
-        }
+        }else alert("Error")
     }
 
 
@@ -56,7 +46,7 @@ export const Login = ({setUser}) => {
 
             </form>
         </div>
-        <img className='LoginImg' src={LoginImg}/>
+        <img className='LoginImg' src={LoginImg} alt="LoginImage"/>
     </div>
   )
 }

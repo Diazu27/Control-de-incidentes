@@ -8,65 +8,49 @@ import { Alert } from '../../Components/Alert/Alert'
 import { addUser, getDepartments, getUserRol } from '../../db/connection'
 
 
-export const NuevoUsuario = () => {
+export const NewCollaborator = () => {
 
-  const [Departamentos, setDepartamentos] = useState([])
-  const [Rol, setRol] = useState([])
-
-
-  useEffect(() => {
-    const getData = async()=>{
-      let data = await getDepartments()
-      let RolData = await getUserRol();
-      setRol(RolData);
-      setDepartamentos(data);
-    }
-    getData()
-  }, [])
-  
-
-
-  const [Error, setError] = useState({
-    IsError: false,
-    msg: ""
-  });
-
-  const [IsComplete, setIsComplete] = useState(false)
-
-  const InitialData = {
+  const [Deparments, setDeparments] = useState([])
+  const [UserRoles, setUserRoles] = useState([])
+  const [ErrorMessage, setErrorMessage] = useState({IsError:false,msg: ""});
+  const [IsProcessComplete, setIsProcessComplete] = useState(false)
+  const CollaboratorTemplate={
     Nombre: '',
     Apellido:'',
     Correo:'',
     Departamento:'',
     Telefono:'',
     Role: 0,
-  }
+  };
 
-  const  [formValues, handleInputChange,validateForm ] = useForm(InitialData)
-  const {Nombre, Apellido, Correo, Departamento, Telefono, Role} = formValues;
+
+  const  [CollaboratorformValues, handleInputChange,validateForm ] = useForm(CollaboratorTemplate)
+  const {Nombre, Apellido, Correo, Departamento, Telefono, Role} = CollaboratorformValues;
+
+  useEffect(() => {
+    const getApiData = async()=>{
+      let Deparments = await getDepartments()
+      let UserRoles = await getUserRol();
+      setUserRoles(UserRoles);
+      setDeparments(Deparments);
+    }
+    getApiData()
+  }, [])
 
   const handleSubmit = async()=>{
-    const {IsError, msg} = validateForm()
-    
-    if(IsError){
-      setError({IsError,msg})
-    }else{
-      setError({IsError})
-      const data = await addUser(formValues);
-
-      if(data){
-        setIsComplete(true)
-      }
+    const {IsError, msg} = validateForm();
+    setErrorMessage({IsError : IsError,msg: msg})
+    if(!IsError){
+      const isEquipmentUpdated = await addUser(CollaboratorformValues);
+      if(isEquipmentUpdated) setIsProcessComplete(true);
     }
   }
-
-
 
   return (
     <div className='mainBox'>
 
       {
-        IsComplete ? <Alert msg='Usuario creado correctamente' path='/admin/Usuarios'/> : ""
+        IsProcessComplete ? <Alert msg='Usuario creado correctamente' path='/admin/Usuarios'/> : ""
       }
      
       <div className='NavView'>
@@ -76,7 +60,7 @@ export const NuevoUsuario = () => {
 
       <form className='form'>
         {
-          Error.IsError ? <div className='FormAlert'>{Error.msg}</div> : ""
+          ErrorMessage.IsError ? <div className='FormAlert'>{ErrorMessage.msg}</div> : ""
         }
 
         <div className='form-row'>
@@ -107,22 +91,14 @@ export const NuevoUsuario = () => {
                 <label>Rol</label>
                 <select className='form-input' name='Role' value={Role} onChange={handleInputChange}>
                   <option value="">SELECCIONE...</option>
-                  {
-                    Rol.map((Rol,i)=>{
-                      return <option key={i} value={Rol.ID}>{Rol.Nombre}</option>                      
-                    })
-                  } 
+                  {UserRoles.map((Role,i)=>{return <option key={i} value={Role.ID}>{Role.Nombre}</option>})} 
                 </select>
             </div> 
             <div className='form-box'>
                 <label>Departamento</label>
                 <select className='form-input' name='Departamento' value={Departamento} onChange={handleInputChange}>
                   <option value="">SELECCIONE...</option>
-                  {
-                    Departamentos.map((Departamento,i)=>{
-                      return <option key={i} value={Departamento.ID}>{Departamento.Nombre}</option>                      
-                    })
-                  } 
+                  {Deparments.map((Departament,i)=>{return <option key={i} value={Departament.ID}>{Departament.Nombre}</option>})} 
                 </select>
             </div> 
         </div>

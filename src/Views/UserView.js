@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Routes, Route } from "react-router-dom"
 import { SideBarUser } from '../Components/Sidebar/SideBarUser';
-import { UserEquipo } from './User/UserEquipo';
+import { UserEquipment } from './User/UserEquipment';
+import { UserIncident } from './User/UserIncident';
 import { UserIncidentDetail } from './User/UserIncidentDetail';
-import { UserIncidente } from './User/UserIncidente';
 import { UserNewIncident } from './User/UserNewIncident';
 
 export const UserView = () => {
@@ -12,11 +12,10 @@ export const UserView = () => {
     <div className="App">
       <SideBarUser/>
       <Routes>
-        <Route path="/equipos" element={ <UserEquipo/> } />
-        <Route path="/incidentes" element={<UserIncidente/>}/>
+        <Route path="/equipos" element={ <UserEquipment/> } />
+        <Route path="/incidentes" element={<UserIncident/>}/>
         <Route path="/incidentes/:id" element={<UserIncidentDetail/>}/>
         <Route path="/incidentes/new" element={<UserNewIncident/>}/>
-
       </Routes>
     </div>
   )
